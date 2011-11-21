@@ -1,5 +1,4 @@
 require 'rubygems'
-require 'spec'
 require 'slurper'
 
 describe Story do

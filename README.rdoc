@@ -16,7 +16,7 @@ Works great with slurper.vim! (http://github.com/adamlowe/vim-slurper)
 
 == Setup
 
-  $gem install slurper
+  $gem install eslurper
 
 == Config
 
@@ -25,11 +25,14 @@ Slurper requires a slurper_config.yml file in your working directory. This file 
 === Example
 
   project_id: 1234
+  epic_features_project_id: 1234
   token: 123abc123abc123abc
   requested_by: Jane Stakeholder
   ssl: true
 
 The project_id tells tracker which project to add your stories to. It can be found on the project settings or the url for the project.
+
+The epic_features_project_id tells tracker which project to pull stories when builing an epic. It can be found on the project settings or the url for the project.
 
 The token can be found on your personal profile page in Pivotal Tracker.
 
@@ -44,15 +47,15 @@ Create a stories.slurper file and compose your stories in the slurper story form
 
 Default
 
-  $slurp ~/stories.slurper
+  $eslurp ~/stories.slurper
   
 Also valid
 
-  $slurp ~/special_stories.slurper
+  $eslurp ~/special_stories.slurper
   
 Or even
 
-  $slurp ~/mystories.txt
+  $eslurp ~/mystories.txt
 
 === Example stories.slurper
 
@@ -82,6 +85,20 @@ Or even
     campaign managers
   ==
   story_type:
+    feature
+  name:
+    Campaign Manager EPIC
+  description:
+    In order to get some value
+    As a campaign manager
+    I want to do something
+
+    - can do something
+
+  labels:
+    campaign, epic
+  ==
+  story_type:
     release
   name:
     Big Release
@@ -100,6 +117,19 @@ Or even
 
   labels:
     
+
+=== Epics
+if the feature has a label of 'epic', eslurper will create an epic feature. You must include one other label for the epic to pull stories.  Eslurper will use the epic_features_project_id to pull stories with the same non-"epic" label.
+It will create add a link to the label search and a list of the related stories.
+
+eg.
+Label Search
+https://www.pivotaltracker.com/projects/264623?label=rental
+
+http://www.pivotaltracker.com/story/show/19906825
+http://www.pivotaltracker.com/story/show/16421895
+
+Because of limitations with the pivotal api, the labels linking stories to epics must not contain whitespace. eslurper will only use the first label as the linking label, also because of a limitation on the pivotal api.
 
 Note: the story source file is whitespace-sensitive. Be sure the value for each key phrase is indented with two spaces beneath each key phrase. Also, start each story with a double-equals on its own line.
 

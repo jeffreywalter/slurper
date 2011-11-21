@@ -1,5 +1,6 @@
 require 'yaml'
 require 'story'
+
 YAML::ENGINE.yamler='syck' if RUBY_VERSION > '1.9'
 
 
@@ -11,7 +12,7 @@ class Slurper
     slurper = new(story_file)
     slurper.load_stories
     slurper.prepare_stories
-    slurper.stories.reverse! unless reverse
+    slurper.sort_stories(reverse)
     slurper.create_stories
   end
 
@@ -25,6 +26,11 @@ class Slurper
 
   def prepare_stories
     stories.each { |story| story.prepare }
+  end
+
+  def sort_stories(reverse)
+    stories.sort!
+    stories.reverse! unless reverse
   end
 
   def create_stories

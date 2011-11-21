@@ -1,5 +1,4 @@
 require 'rubygems'
-require 'spec'
 require 'slurper'
 
 describe Slurper do
@@ -13,6 +12,18 @@ describe Slurper do
 
     it "strips whitespace from the name" do
       @story.name.should == "Profit"
+    end
+  end
+
+  context "given an epic feature" do
+    before do
+      slurper = Slurper.new(File.join(File.dirname(__FILE__), "fixtures", "epic_story.slurper"))
+      slurper.load_stories
+      @story = slurper.stories.first
+    end
+
+    it "knows it's an epic story" do
+      @story.epic_story? == true
     end
   end
 

@@ -19,6 +19,7 @@ describe Slurper do
     before do
       slurper = Slurper.new(File.join(File.dirname(__FILE__), "fixtures", "epic_story.slurper"))
       slurper.load_stories
+      require 'ruby-debug'; Debugger.start; Debugger.settings[:autoeval] = 1; Debugger.settings[:autolist] = 1; debugger
       @story = slurper.stories.first
     end
 

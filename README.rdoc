@@ -1,6 +1,9 @@
-= slurper
+= eslurper
 
-Slurper allows you to quickly compose your stories in a text file and import them into Pivotal Tracker.
+This project has been forked from http://github.com/hashrocket/slurper to fill our needs specifically for linking features to epics across different projects.
+The 'e' stands for Ericsson. As soon as pivotal updates projects with their own epics, eslurper will become less usefull :)
+
+Eslurper allows you to quickly compose your stories in a text file and import them into Pivotal Tracker.
 
 Works great with slurper.vim! (http://github.com/adamlowe/vim-slurper)
 
@@ -56,6 +59,10 @@ Also valid
 Or even
 
   $eslurp ~/mystories.txt
+
+Epics (see the epics section)
+
+  $eslurp -u 12345
 
 === Example stories.slurper
 
@@ -131,7 +138,16 @@ http://www.pivotaltracker.com/story/show/16421895
 
 Because of limitations with the pivotal api, the labels linking stories to epics must not contain whitespace. eslurper will only use the first label as the linking label, also because of a limitation on the pivotal api.
 
-Note: the story source file is whitespace-sensitive. Be sure the value for each key phrase is indented with two spaces beneath each key phrase. Also, start each story with a double-equals on its own line.
+You can also link epics already in pivotal.
+eslurp -u [story_id]
+
+eslurp will find the story matching the story id, if provided, and will link the features.
+If no story id is provided, eslurp will search pivotal for epics that are no linked and update them all.  Careful!
+
+Epics are marked with a "linked" label if they have been processed.
+
+=== Notes
+the story source file is whitespace-sensitive. Be sure the value for each key phrase is indented with two spaces beneath each key phrase. Also, start each story with a double-equals on its own line.
 
 Your best bet is to leverage slurper.vim and benefit from its auto-indenting goodness.
 

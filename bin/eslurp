@@ -22,8 +22,12 @@ OptionParser.new do |opts|
   opts.on("-r", "--reverse", "Reverse story creation order") do |v|
     options[:reverse] = v
   end
+  opts.on('-u', '--update_epic [STORY_ID]', Integer, "Link existing epic(s) with feature urls","if no story id provided, all current epics that aren't linked will be updated") do |ue|
+    options[:update_epics] = true
+    options[:story_query] = ue
+  end
 end.parse!
 
 story_file = ARGV.empty? ? "stories.slurper" : ARGV[0]
 
-Slurper.slurp(story_file, options[:reverse])
+Slurper.slurp(story_file, options)

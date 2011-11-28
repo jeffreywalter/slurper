@@ -6,22 +6,30 @@ YAML::ENGINE.yamler='syck' if RUBY_VERSION > '1.9'
 
 class Slurper
 
-  attr_accessor :story_file, :stories
+  attr_accessor :story_file, :stories, :update_epics, :story_query
 
-  def self.slurp(story_file, reverse)
-    slurper = new(story_file)
+  def self.slurp(story_file, options)
+    
+    slurper = new(story_file, options)
+
     slurper.load_stories
     slurper.prepare_stories
-    slurper.sort_stories(reverse)
+    slurper.sort_stories(options[:reverse])
     slurper.create_stories
   end
 
-  def initialize(story_file)
+  def initialize(story_file, options)
     self.story_file = story_file
+    self.update_epics = options[:update_epics]
+    self.story_query = options[:story_query]
   end
 
   def load_stories
-    self.stories = YAML.load(yamlize_story_file)
+    if update_epics
+      self.stories = Story.find_unlinked_epics(story_query)
+    else
+      self.stories = YAML.load(yamlize_story_file)
+    end
   end
 
   def prepare_stories
